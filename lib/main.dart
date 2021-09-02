@@ -14,7 +14,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   static final String title = 'Localization';
-
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => LocaleProvider(),
