@@ -40,30 +40,3 @@ class MyApp extends StatelessWidget {
         },
       );
 }
-
-
-
-/* class MyApp extends StatelessWidget {
-   @override
-   Widget build(BuildContext context) {
-     return StreamProvider<TheUser?>.value(
-       value: AuthService().user, initialData: null,
-         child: ChangeNotifierProvider(
-           create: (context) => LocaleProvider(),
-           builder: (context, child) {
-             return MaterialApp(
-               debugShowCheckedModeBanner: false,
-               home: Wrapper(),
-               supportedLocales: L10n.all,
-               localizationsDelegates: [
-                 AppLocalizations.delegate,
-                 GlobalMaterialLocalizations.delegate,
-                 GlobalCupertinoLocalizations.delegate,
-                 GlobalWidgetsLocalizations.delegate,
-               ],
-             );
-           },
-         ),
-     );
-   }
-}*/
