@@ -1,0 +1,30 @@
+{
+    "language": "English",
+    "@language":{
+        "description": "The current Language"
+    },
+    "login_title": "Login",
+    "register_title": "Register",
+    "verifyEmail_title": "Verify your email",
+    "mail_field": "Email",
+    "password_field": "Password",
+    "confirmPassword_field": "Confirm Password",
+    "signIn_button": "Sign In",
+    "register_button": "Register",
+    "createAccount_button": "Create Account",
+    "logIn_button": "Already have an account? Log in",
+
+    "mail_field_error": "Enter a valid Email",
+    "password_field_error": "Enter your password",
+    "login_error": "Could not sign in with those credentials",
+
+    "password_register_error": "Enter a password 6+ chars long",
+    "confirmPassword_register_error": "Passwords must match",
+    "register_error": "Please supply valid information",
+
+    "verifyEmail_message": "We sent you an email with a link to make the verification of your account, click the link to make the verification",
+    "verifyEmail_resend_button" : "Re-send mail",
+    "verifyEmail_login_button" : "Login",
+
+    "logout_button" : "Logout"
+}

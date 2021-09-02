@@ -1,0 +1,27 @@
+{
+    "language": "Español",
+    "login_title": "Iniciar sesión",
+    "register_title": "Registrate",
+    "verifyEmail_title": "Verifica tu correo electrónico",
+    "mail_field": "Correo electrónico",
+    "password_field": "Contraseña",
+    "confirmPassword_field": "Confirmar Contraseña",
+    "signIn_button": "Iniciar sesión",
+    "register_button": "Registrarse",
+    "createAccount_button": "Crear cuenta",
+    "logIn_button": "¿Ya tienes una cuenta? Inicia sesión",
+
+    "mail_field_error": "Ingresa un correco electrónico valido",
+    "password_field_error": "Ingresa tu contraseña",
+    "login_error": "Credenciales incorrectas",
+
+    "password_register_error": "Ingresa una contraseña mayor a 6 caracteres",
+    "confirmPassword_register_error": "Las contraseñas deben coincidir",
+    "register_error": "Por favor, ingresa información válida",
+
+    "verifyEmail_message": "Te enviamos un correo electrónico con un enlace para realizar la verificación de tu cuenta, haz click en el enlace para verificarla",
+    "verifyEmail_resend_button" : "Reenviar correo",
+    "verifyEmail_login_button" : "Iniciar sesión",
+
+    "logout_button" : "Cerrar sesión"
+}
