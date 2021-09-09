@@ -3,7 +3,7 @@ import 'package:my_app/services/auth.dart';
 import 'package:my_app/widgets/language_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Home extends StatelessWidget {
+class Admin extends StatelessWidget {
 
   final AuthService _auth = AuthService();
 
@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Customer view, you are logged in as a Customer'),
+            Text('Admin view, you are logged in as an Admin'),
           ],
         ),
       ),

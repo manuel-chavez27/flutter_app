@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/date_symbols.dart';
 import 'package:my_app/models/user.dart';
+import 'package:my_app/services/database.dart';
+import 'package:package_info/package_info.dart';
 
 class AuthService {
 
@@ -47,6 +52,11 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
       await user.sendEmailVerification();
+
+      // Create a new document fo the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData('customer');
+
+
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
