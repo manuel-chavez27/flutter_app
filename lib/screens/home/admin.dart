@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/chat/chatRoomsScreen.dart';
 import 'package:my_app/services/auth.dart';
 import 'package:my_app/widgets/language_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Admin extends StatelessWidget {
-
   final AuthService _auth = AuthService();
+
+  final chatRoute = MaterialPageRoute(builder: (context) => ChatRoom());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class Admin extends StatelessWidget {
           // ignore: deprecated_member_use
           FlatButton.icon(
             icon: Icon(Icons.person),
-            onPressed: () async{
+            onPressed: () async {
               await _auth.signOut();
             },
             label: Text(AppLocalizations.of(context)!.logout_button),
@@ -36,6 +38,17 @@ class Admin extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.chat_outlined),
+        onPressed: () {
+          _navigateToNextScreen(context);
+        },
+      ),
     );
+  }
+
+  void _navigateToNextScreen(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ChatRoom()));
   }
 }

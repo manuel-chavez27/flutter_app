@@ -8,15 +8,57 @@ class DatabaseService {
   // Collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
   
-  Future updateUserData(String role) async {
+  Future updateUserData(String role, String username, String email) async {
     return await userCollection.document(uid).setData({
       'role': role,
+      'username': username,
+      'email': email,
     });
   }
 
   // Get Users stream
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();
+  }
+
+  getUserByUsername(String username) async {
+    return await Firestore.instance.collection('users')
+    .where("username", isEqualTo: username)
+    .getDocuments();
+  }
+
+  getUserByUserEmail(String userEmail) async {
+    return await Firestore.instance.collection('users')
+    .where("email", isEqualTo: userEmail)
+    .getDocuments();
+  }
+
+  createChatRoom(String chatRoomId, chatRoomMap) {
+    Firestore.instance.collection("ChatRoom")
+      .document(chatRoomId).setData(chatRoomMap).catchError((e){
+        print(e.toString());
+      });
+  }
+
+  addConversationMessages(String chatRoomId, messageMap) {
+    Firestore.instance.collection("ChatRoom")
+      .document(chatRoomId)
+      .collection("chats")
+      .add(messageMap).catchError((e){print(e.toString());});
+  }
+  
+  getConversationMessages(String chatRoomId) async {
+    return await Firestore.instance.collection("ChatRoom")
+      .document(chatRoomId)
+      .collection("chats")
+      .orderBy("time", descending: false)
+      .snapshots();
+  }
+
+  getChatRooms(String userName) async {
+    return await Firestore.instance.collection("ChatRoom")
+      .where("users", arrayContains: userName)
+      .snapshots();
   }
 
 }

@@ -7,6 +7,7 @@
     "register_title": "Register",
     "verifyEmail_title": "Verify your email",
     "mail_field": "Email",
+    "username_field": "Username",
     "password_field": "Password",
     "confirmPassword_field": "Confirm Password",
     "signIn_button": "Sign In",
@@ -18,6 +19,7 @@
     "password_field_error": "Enter your password",
     "login_error": "Could not sign in with those credentials",
 
+    "username_register_error": "The username can't be empty",
     "password_register_error": "Enter a password 6+ chars long",
     "confirmPassword_register_error": "Passwords must match",
     "register_error": "Please supply valid information",

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/services/auth.dart';
+import 'package:my_app/services/constants.dart';
+import 'package:my_app/services/helperfunctions.dart';
 import 'package:my_app/ui/input_decorations.dart';
 import 'package:my_app/widgets/auth_background.dart';
 import 'package:my_app/widgets/card_container.dart';
@@ -20,11 +22,14 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 
+  TextEditingController userNameTextEditingController = new TextEditingController();
+
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
    // Text field state
+  String username = '';
   String email = '';
   String password = '';
   String passwordConfirmation = '';
@@ -60,6 +65,21 @@ class _RegisterState extends State<Register> {
                                 key: _formKey,
                                 child: Column(
                                   children: <Widget>[
+                                    SizedBox(height: 20.0),
+                                    TextFormField(
+                                      controller: userNameTextEditingController,
+                                      autocorrect: false,
+                                      keyboardType: TextInputType.name,
+                                      decoration: InputDecorations.authInputDecoration(
+                                                    hintText: 'johnDoe123',
+                                                    labelText: AppLocalizations.of(context)!.username_field,
+                                                    prefixIcon: Icons.supervisor_account
+                                                  ),
+                                      validator: (val) => val!.isEmpty ? AppLocalizations.of(context)!.username_register_error : null,
+                                      onChanged: (val) {
+                                        setState(() => username = val);
+                                      },
+                                    ),
                                     SizedBox(height: 20.0),
                                     TextFormField(
                                       autocorrect: false,
@@ -107,11 +127,18 @@ class _RegisterState extends State<Register> {
                                       child: Text(AppLocalizations.of(context)!.register_button,),
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()){
+
+                                          HelperFunctions.saveUserEmailSharedPreference(email);
+                                          //HelperFunctions.saveUserNameSharedPreference(username);
+                                          Constants.myName = username;
+
                                           setState(() => loading = true);
-                                          dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                          dynamic result = await _auth.registerWithEmailAndPassword(username, email, password);
                                           if(result == null){
                                             setState(() => error = AppLocalizations.of(context)!.register_error);
                                             loading = false;
+                                          }else {
+                                            HelperFunctions.saveUserLoggedInSharedPreference(true);
                                           }
                                         }
                                       },

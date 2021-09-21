@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_app/models/user.dart';
+import 'package:my_app/routes/routes.dart';
 import 'package:my_app/screens/wrapper.dart';
 import 'package:my_app/services/auth.dart';
 import 'package:my_app/services/locale_provider.dart';
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           final provider = Provider.of<LocaleProvider>(context);
           return StreamProvider<TheUser?>.value(
-            value: AuthService().user, initialData: null,
+            value: AuthService().user,
+            initialData: null,
             builder: (context, child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                 ],
+                routes: getApplicationRoutes(),
                 home: Wrapper(),
               );
             },

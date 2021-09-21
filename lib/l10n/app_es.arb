@@ -4,6 +4,7 @@
     "register_title": "Registrate",
     "verifyEmail_title": "Verifica tu correo electrónico",
     "mail_field": "Correo electrónico",
+    "username_field": "Usuario",
     "password_field": "Contraseña",
     "confirmPassword_field": "Confirmar Contraseña",
     "signIn_button": "Iniciar sesión",
@@ -11,10 +12,11 @@
     "createAccount_button": "Crear cuenta",
     "logIn_button": "¿Ya tienes una cuenta? Inicia sesión",
 
-    "mail_field_error": "Ingresa un correco electrónico valido",
+    "mail_field_error": "Ingresa un correo electrónico valido",
     "password_field_error": "Ingresa tu contraseña",
     "login_error": "Credenciales incorrectas",
 
+    "username_register_error": "El usuario no puede estar vacio",
     "password_register_error": "Ingresa una contraseña mayor a 6 caracteres",
     "confirmPassword_register_error": "Las contraseñas deben coincidir",
     "register_error": "Por favor, ingresa información válida",
