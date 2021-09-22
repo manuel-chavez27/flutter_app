@@ -8,7 +8,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 
 const appID = "a83cbe17263b4c7dbea35688d0949ad9";
-const token = "006a83cbe17263b4c7dbea35688d0949ad9IAAoPK3eka0ZeggVzrYaZC/dqB201vTJ8dxQjKYl8O/JRNzDPrsAAAAAEADkBngOOXpKYQEAAQA5ekph";
+const token = "006a83cbe17263b4c7dbea35688d0949ad9IABqDEvEJarTPNqr8XUrRCPgXtDIA9Y+1DPjop0VXVMAqNzDPrsAAAAAEADkBngOb5FMYQEAAQBvkUxh";
 
 class videoChat extends StatefulWidget {
   @override
@@ -159,7 +159,7 @@ class _videoChatState extends State<videoChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Group Video Calling'),
+        title: Text('Videollamada'),
       ),
       backgroundColor: Colors.black,
       body: Center(
