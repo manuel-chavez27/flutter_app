@@ -33,6 +33,15 @@ class DatabaseService {
     .getDocuments();
   }
 
+  // Get Specific field from doc
+  Future<String> getEmailByUserName(String username, String uid) async {
+    String email = '';
+    await userCollection.document(uid).get().then((value) {
+      email = value.data['email'].toString();
+    });
+    return email;
+  }
+
   createChatRoom(String chatRoomId, chatRoomMap) {
     Firestore.instance.collection("ChatRoom")
       .document(chatRoomId).setData(chatRoomMap).catchError((e){
@@ -58,6 +67,12 @@ class DatabaseService {
   getChatRooms(String userName) async {
     return await Firestore.instance.collection("ChatRoom")
       .where("users", arrayContains: userName)
+      .snapshots();
+  }
+
+  getEmployees(String username) async {
+    return await Firestore.instance.collection("users")
+      .where("role", isEqualTo: "admin")
       .snapshots();
   }
 

@@ -28,5 +28,17 @@
     "verifyEmail_resend_button" : "Re-send mail",
     "verifyEmail_login_button" : "Login",
 
-    "logout_button" : "Logout"
+    "home_sideMenu" : "Home",
+    "appointment_sideMenu" : "Appointment",
+    "privacyPolicies_sideMenu" : "Privacy Policies",
+    "faq_sideMenu" : "FAQ",
+    "logout_sideMenu" : "Log Out",
+
+    "promo_home" : "Promo Day",
+    "promo_message_home" : "This promo is only one time, all our different bundles have a 30% discount",
+    "appointment_button_home" : "Get Appointment",
+    "section_1_home" : "Interior Detail",
+    "section_2_home" : "Engine Wipe Down",
+    "section_3_home" : "Headlight Cleaning",
+    "section_4_home" : "Exterior Wash"
 }

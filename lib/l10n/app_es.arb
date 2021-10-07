@@ -25,5 +25,17 @@
     "verifyEmail_resend_button" : "Reenviar correo",
     "verifyEmail_login_button" : "Iniciar sesión",
 
-    "logout_button" : "Cerrar sesión"
+    "home_sideMenu" : "Inicio",
+    "appointment_sideMenu" : "Citas",
+    "privacyPolicies_sideMenu" : "Avisos de privacidad",
+    "faq_sideMenu" : "FAQ",
+    "logout_sideMenu" : "Cerrar sesión",
+
+    "promo_home" : "Promoción del día",
+    "promo_message_home" : "Promoción única, todos nuestros paquetes tienen un 30% de descuento",
+    "appointment_button_home" : "Agendar Cita",
+    "section_1_home" : "Estética de Interiores",
+    "section_2_home" : "Lavado de Motor",
+    "section_3_home" : "Limpieza de Faros",
+    "section_4_home" : "Lavado Exterior"
 }

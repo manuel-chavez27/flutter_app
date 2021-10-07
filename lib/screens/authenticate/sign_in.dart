@@ -114,6 +114,12 @@ class _SignInState extends State<SignIn> {
                                         snapshotUserInfo = val;
                                         HelperFunctions.saveUserNameSharedPreference(snapshotUserInfo!.documents[0].data["username"]);
                                         Constants.myName = snapshotUserInfo!.documents[0].data["username"];
+
+                                        HelperFunctions.saveUserEmailSharedPreference(snapshotUserInfo!.documents[0].data["email"]);
+                                        Constants.email = snapshotUserInfo!.documents[0].data["email"];
+
+                                        HelperFunctions.saveUserUidSharedPreference(snapshotUserInfo!.documents[0].documentID);
+                                        Constants.uid = snapshotUserInfo!.documents[0].documentID;
                                       });
 
                                     setState(() => loading = true);
