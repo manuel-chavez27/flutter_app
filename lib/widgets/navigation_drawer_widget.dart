@@ -7,6 +7,7 @@ import 'package:my_app/screens/appointment/appointment.dart';
 import 'package:my_app/screens/helper/faq.dart';
 import 'package:my_app/screens/helper/privacy.dart';
 import 'package:my_app/screens/home/home.dart';
+import 'package:my_app/screens/wrapper.dart';
 import 'package:my_app/services/auth.dart';
 import 'package:my_app/services/constants.dart';
 import 'package:my_app/services/database.dart';
@@ -122,7 +123,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     switch (index) {
       case 0:
         Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => Home(),
+          builder: (context) => Wrapper(),
         ));
         break;
 
@@ -146,6 +147,9 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
         case 4:
           await _auth.signOut();
+          Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => Wrapper(),
+        ));
         break;
 
     }
