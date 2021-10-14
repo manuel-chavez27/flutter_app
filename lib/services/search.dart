@@ -80,7 +80,6 @@ class _SearchScreenState extends State<SearchScreen> {
           Spacer(),
           GestureDetector(
             onTap: (){
-              //createChatroomAndStartConversation(userName: userName);
               Navigator.push(
               context, MaterialPageRoute(builder: (context) => ProfilePage(userName: userName)));
             },
@@ -94,7 +93,22 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: Colors.white,
               ),),
             ),
-          )
+          ),
+          GestureDetector(
+            onTap: (){
+              createChatroomAndStartConversation(userName: userName);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(30)
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text("Chat", style: TextStyle(
+                color: Colors.white,
+              ),),
+            ),
+          ),
         ],
       ),
     );
