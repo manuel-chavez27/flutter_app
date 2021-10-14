@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
 
@@ -33,13 +34,29 @@ class DatabaseService {
     .getDocuments();
   }
 
-  // Get Specific field from doc
-  Future<String> getEmailByUserName(String username, String uid) async {
+  getUidByUsername(String username) async {
+    return await username.toString();
+  }
+
+  
+  /*
+  * Get Specific field from doc
+  ! If you want to get the value from a Future, you have to await the future (see profile.dart for reference)
+  */
+  Future<String> getEmailByUserName(String username) async {
     String email = '';
-    await userCollection.document(uid).get().then((value) {
-      email = value.data['email'].toString();
+    await userCollection.where('username', isEqualTo: username).getDocuments().then((value) => {
+      email = value.documents.first.data['email']
     });
     return email;
+  }
+
+  Future<String> getRoleByUsername(String username) async {
+    String role = '';
+    await userCollection.where('username', isEqualTo: username).getDocuments().then((value) => {
+      role = value.documents.first.data['role']
+    });
+    return role;
   }
 
   createChatRoom(String chatRoomId, chatRoomMap) {
@@ -74,6 +91,20 @@ class DatabaseService {
     return await Firestore.instance.collection("users")
       .where("role", isEqualTo: "admin")
       .snapshots();
+  }
+
+  // Update Doc
+  Future<void> updateUserRole(String username, String role) async {
+    String uid = '';
+    /*
+    ? How to get the UID from a doc from Firestore
+    */
+    await userCollection.where('username', isEqualTo: username).getDocuments().then((value) => {
+      uid = value.documents.first.documentID
+    });
+    return await Firestore.instance.collection("users")
+      .document(uid)
+      .setData({"role" : role}, merge: true);
   }
 
 }

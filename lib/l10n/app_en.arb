@@ -40,5 +40,12 @@
     "section_1_home" : "Interior Detail",
     "section_2_home" : "Engine Wipe Down",
     "section_3_home" : "Headlight Cleaning",
-    "section_4_home" : "Exterior Wash"
+    "section_4_home" : "Exterior Wash",
+
+    "admin_home" : "Employees",
+    "profile_role" : "User role",
+    "profile_edit_role" : "Edit Role",
+    "profile_review" : "Review",
+    "profile_positive": "Positive",
+    "profile_negative": "Negative"
 }

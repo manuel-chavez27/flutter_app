@@ -42,7 +42,7 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-
+      
       HelperFunctions.saveUserLoggedInSharedPreference(true);
 
       return _userFromFirebaseUser(user);

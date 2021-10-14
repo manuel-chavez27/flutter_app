@@ -4,6 +4,7 @@ import 'package:my_app/screens/chat/conversation_screen.dart';
 import 'package:my_app/services/constants.dart';
 import 'package:my_app/services/database.dart';
 import 'package:my_app/services/helperfunctions.dart';
+import 'package:my_app/services/profile.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -79,7 +80,9 @@ class _SearchScreenState extends State<SearchScreen> {
           Spacer(),
           GestureDetector(
             onTap: (){
-              createChatroomAndStartConversation(userName: userName);
+              //createChatroomAndStartConversation(userName: userName);
+              Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ProfilePage(userName: userName)));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -87,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 borderRadius: BorderRadius.circular(30)
               ),
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Text("Message", style: TextStyle(
+              child: Text("Profile", style: TextStyle(
                 color: Colors.white,
               ),),
             ),

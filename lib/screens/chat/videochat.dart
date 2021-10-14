@@ -8,7 +8,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 
 const appID = "a83cbe17263b4c7dbea35688d0949ad9";
-const token = "006a83cbe17263b4c7dbea35688d0949ad9IAA2oyjC0G4mrMqESfNmSc17k2wWciGZyFkCMPxAJ9+HntzDPrsAAAAAEADkBngONgpNYQEAAQA2Ck1h";
+const token = "006a83cbe17263b4c7dbea35688d0949ad9IABTIwJlfw3hV9Z+r2bftV4M4EeJlQZAmfioCFmc3WOZ8dzDPrsAAAAAEAAjN/ZbyN5pYQEAAQDI3mlh";
 
 class videoChat extends StatefulWidget {
   @override

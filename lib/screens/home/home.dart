@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
       drawer: NavigationDrawerWidget(),
       body: Container(
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
           child: Column(
             children: <Widget>[
               Flexible(

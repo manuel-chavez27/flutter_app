@@ -37,5 +37,12 @@
     "section_1_home" : "Estética de Interiores",
     "section_2_home" : "Lavado de Motor",
     "section_3_home" : "Limpieza de Faros",
-    "section_4_home" : "Lavado Exterior"
+    "section_4_home" : "Lavado Exterior",
+
+    "admin_home" : "Empleados",
+    "profile_role" : "Rol de usuario",
+    "profile_edit_role" : "Editar Rol",
+    "profile_review" : "Calificación",
+    "profile_positive": "Positivas",
+    "profile_negative": "Negativas"
 }

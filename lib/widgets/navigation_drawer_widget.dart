@@ -2,7 +2,6 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/user.dart';
-import 'package:my_app/screens/Settings/settings.dart';
 import 'package:my_app/screens/appointment/appointment.dart';
 import 'package:my_app/screens/helper/faq.dart';
 import 'package:my_app/screens/helper/privacy.dart';

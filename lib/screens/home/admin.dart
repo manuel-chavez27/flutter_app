@@ -5,9 +5,12 @@ import 'package:my_app/services/auth.dart';
 import 'package:my_app/services/constants.dart';
 import 'package:my_app/services/database.dart';
 import 'package:my_app/services/helperfunctions.dart';
+import 'package:my_app/services/profile.dart';
+import 'package:my_app/services/search.dart';
 import 'package:my_app/widgets/language_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_app/widgets/navigation_drawer_widget.dart';
+import 'package:my_app/widgets/profile_widget.dart';
 
 class Admin extends StatefulWidget {
   @override
@@ -57,7 +60,7 @@ class _AdminState extends State<Admin> {
           child: Column(
             children: <Widget>[
               Container(
-                child: Text("Employees"),
+                child: Text(AppLocalizations.of(context)!.admin_home),
               ),
               Flexible(
                 child: employeesList(),
@@ -67,11 +70,18 @@ class _AdminState extends State<Admin> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.search),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchScreen()));
+        },
+      ),
+      /*floatingActionButton: FloatingActionButton(
         child: Icon(Icons.chat_outlined),
         onPressed: () {
           _navigateToNextScreen(context);
         },
-      ),
+      ),*/
     );
   }
 
@@ -102,7 +112,10 @@ class employeesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ProfilePage(userName: userName)));
+      },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(

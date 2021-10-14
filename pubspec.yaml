@@ -65,6 +65,9 @@ flutter:
     - assets/images/lavado_exterior.jpg
     - assets/images/limpieza_faros.png
     - assets/images/shopping_car.png
+    - assets/images/first_bundle.jpg
+    - assets/images/second_bundle.jpg
+    - assets/images/third_bundle.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
