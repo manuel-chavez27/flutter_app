@@ -47,5 +47,9 @@
     "profile_edit_role" : "Edit Role",
     "profile_review" : "Review",
     "profile_positive": "Positive",
-    "profile_negative": "Negative"
+    "profile_negative": "Negative",
+
+    "first_bundle" : "Exterior Wash",
+    "second_bundle" : "Cleaning and Vacuuming",
+    "third_bundle" : "Deluxe Wash"
 }

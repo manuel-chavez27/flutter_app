@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/widgets/language_picker.dart';
 import 'package:my_app/widgets/navigation_drawer_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Appointment extends StatelessWidget {
   @override
@@ -23,9 +24,9 @@ class Appointment extends StatelessWidget {
           padding: EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              makeBundle(image: 'assets/images/first_bundle.jpg', tag: 'red', bundle: 'Lavado Exterior', price: '80\$' ),
-              makeBundle(image: 'assets/images/second_bundle.jpg', tag: 'blue', bundle: 'Lavado y Aspirado', price: '150\$' ),
-              makeBundle(image: 'assets/images/third_bundle.jpg', tag: 'white', bundle: 'Lavado Deluxe', price: '200\$')
+              makeBundle(image: 'assets/images/first_bundle.jpg', tag: 'red', bundle: AppLocalizations.of(context)!.first_bundle, price: '80\$' ),
+              makeBundle(image: 'assets/images/second_bundle.jpg', tag: 'blue', bundle:  AppLocalizations.of(context)!.second_bundle, price: '150\$' ),
+              makeBundle(image: 'assets/images/third_bundle.jpg', tag: 'white', bundle:  AppLocalizations.of(context)!.third_bundle, price: '200\$')
             ],
           ),
         ),

@@ -44,5 +44,10 @@
     "profile_edit_role" : "Editar Rol",
     "profile_review" : "Calificación",
     "profile_positive": "Positivas",
-    "profile_negative": "Negativas"
+    "profile_negative": "Negativas",
+
+    "first_bundle" : "Lavado Exterior",
+    "second_bundle" : "Lavado y Aspirado",
+    "third_bundle" : "Lavado Deluxe"
+
 }
