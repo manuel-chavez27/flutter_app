@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,6 +21,20 @@ class DatabaseService {
   // Get Users stream
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();
+  }
+
+  Future<String>getRandomEmployee() async {
+    String employee = '';
+    int length = 0;
+    Random random = new Random();
+    int x = 0;
+    await userCollection.where('role', isEqualTo: 'admin').getDocuments().then((value) => {
+      length = value.documents.length,
+      x = random.nextInt(length),
+      //employee = value.documents.last.data['username']
+      employee = value.documents.elementAt(x).data['username'].toString()
+    });
+    return employee;
   }
 
   getUserByUsername(String username) async {
@@ -66,6 +81,13 @@ class DatabaseService {
       });
   }
 
+  createAppointment(String appointmentID, appointmentMap) {
+    Firestore.instance.collection('Appointment')
+      .document(appointmentID).setData(appointmentMap).catchError((e){
+        print(e.toString());
+      });
+  }
+
   addConversationMessages(String chatRoomId, messageMap) {
     Firestore.instance.collection("ChatRoom")
       .document(chatRoomId)
@@ -87,9 +109,29 @@ class DatabaseService {
       .snapshots();
   }
 
+  Future<bool> getChatRoomById(String id) async {
+    //String id = '';
+    /*await Firestore.instance.collection("ChatRoom").where('chatRoomId', isEqualTo: id).getDocuments().then((value) => {
+      id = value.documents.first.data['email']
+    });*/
+    return await Firestore.instance.collection("ChatRoom").where('chatRoomId', isEqualTo: id).snapshots().isEmpty;
+  }
+
   getEmployees(String username) async {
     return await Firestore.instance.collection("users")
       .where("role", isEqualTo: "admin")
+      .snapshots();
+  }
+
+  getAppointments(String userName) async {
+    return await Firestore.instance.collection("Appointment")
+      .where("users", arrayContains: userName)
+      .snapshots();
+  }
+
+  getAppointmentByID(String appointmentID) async {
+    return await Firestore.instance.collection("Appointment")
+      .where('appointmentID', isEqualTo: appointmentID)
       .snapshots();
   }
 

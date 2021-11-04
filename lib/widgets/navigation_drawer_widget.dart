@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/appointment/appointment.dart';
+import 'package:my_app/screens/appointment/appointment_wrapper.dart';
+import 'package:my_app/screens/appointment/see_appointment.dart';
 import 'package:my_app/screens/helper/faq.dart';
 import 'package:my_app/screens/helper/privacy.dart';
 import 'package:my_app/screens/home/home.dart';
@@ -73,6 +75,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               icon: Icons.info,
               onClicked: () => selectedItem(context, 3),
             ),
+            const SizedBox(height: 16),
+            buildMenuItem(
+              text: AppLocalizations.of(context)!.my_appointment_sideMenu,
+              icon: Icons.schedule_send,
+              onClicked: () => selectedItem(context, 4),
+            ),
             const SizedBox(height: 24),
             Divider(color: Colors.white70),
             const SizedBox(height: 24),
@@ -80,7 +88,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             buildMenuItem(
               text: AppLocalizations.of(context)!.logout_sideMenu,
               icon: Icons.logout,
-              onClicked: () => selectedItem(context, 4),
+              onClicked: () => selectedItem(context, 5),
             ),
           ],
         ),
@@ -128,7 +136,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
       case 1:
         Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => Appointment(),
+          builder: (context) => AppointmentWraper(),
         ));
         break;
 
@@ -144,9 +152,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         ));
         break;
 
-        case 4:
-          await _auth.signOut();
-          Navigator.pushReplacement(context, MaterialPageRoute(
+      case 4:
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => MyAppointments(),
+        ));
+        break;
+
+      case 5:
+        await _auth.signOut();
+        Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => Wrapper(),
         ));
         break;
