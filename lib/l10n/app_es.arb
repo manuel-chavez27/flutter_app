@@ -3,6 +3,7 @@
 
     "appbar_appointment" : "Citas",
     "appbar_privacy" : "Avisos de Privacidad",
+    "appbar_videochat" : "Videollamada",
 
     "login_title": "Iniciar sesión",
     "register_title": "Registrate",
@@ -136,6 +137,6 @@
     "appointment_for" : "Cita para el",
     "appointment_at" : "A las",
     "appointment_employee" : "Encargado",
-    "appointment_chat" : "Chatea con el encargado"
+    "appointment_chat" : "Chatea con el cliente"
 
 }

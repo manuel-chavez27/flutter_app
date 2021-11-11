@@ -19,15 +19,30 @@ class _MyAppointmentsState extends State<MyAppointments> {
 
   DatabaseService databaseMethods = new DatabaseService();
 
+  String? filter;
+  int? length;
+  int bundle = 401;
+
   Stream? appointmentStream;
 
-  Widget appointmentList() {
+
+  getInitialLength() async {
+    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+    length = await databaseMethods.getInitialLength(Constants.myName);
+    print("Tienes un total de citas: $length");
+    setState(() {
+      length = this.length!;
+    });
+  }
+
+  Widget appointmentList(length) {
     return StreamBuilder(
       stream: appointmentStream,
       builder: (context, snapshot){
         return snapshot.hasData ? ListView.builder(
-          itemCount: (snapshot.data! as QuerySnapshot).documents.length,
+          itemCount: length,
           itemBuilder: (context, index) {
+            print('Tamaño total: $length');
             return AppointmentsTile((snapshot.data! as QuerySnapshot ).documents[index]["appointmentID"], (snapshot.data! as QuerySnapshot).documents[index]["bundle"], (snapshot.data! as QuerySnapshot).documents[index]["time"]);
           },
         ) : Container(child: Text('You have no appointments'));
@@ -41,19 +56,30 @@ class _MyAppointmentsState extends State<MyAppointments> {
     super.initState(); 
   }
 
+
   getUserInfo() async {
-    Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+  Constants.myName = await HelperFunctions.getUserNameSharedPreference();
+  if(bundle==401) {
+    print('Calculando sin bundle');
+    getInitialLength();
     databaseMethods.getAppointments(Constants.myName).then((value){
       setState(() {
         appointmentStream = value;
       });
     });
-    setState(() {
+  } else {
+    print('Bundle value: $bundle');
+    databaseMethods.getAppointmentsBundle(Constants.myName, bundle).then((value){
+      setState(() {
+        appointmentStream = value;
+      });
     });
+  }
   }
 
   @override
   Widget build(BuildContext context) {
+    List<String> items = [AppLocalizations.of(context)!.first_bundle, AppLocalizations.of(context)!.second_bundle, AppLocalizations.of(context)!.third_bundle];
     return Scaffold(
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
@@ -67,19 +93,84 @@ class _MyAppointmentsState extends State<MyAppointments> {
         ],
       ),
       drawer: NavigationDrawerWidget(),
-      body: appointmentList()
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
+          Container(
+            width: 200,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: filter,
+                isExpanded: true,
+                icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                iconSize: 36,
+                items: items.map(buildMenuItem).toList(),
+                onChanged: (value) async {
+                 setState(() {
+                   this.filter = value;
+                   if(value=='Exterior Wash' || value=='Lavado Exterior') {
+                      bundle=1;
+                    } else if(value=='Cleaning and Vacuuming' || value=='Lavado y Aspirado') {
+                      bundle=2;
+                    } else{
+                      bundle=3;
+                    }
+                 });
+                 length = await databaseMethods.getLength(filter!, Constants.myName);
+                 setState(() {
+                   appointmentList(length);
+                 });
+                 getUserInfo();
+                } 
+              ),
+            ),
+          ),
+          Text('Tamaño: $length'),
+          Expanded(
+            child: SizedBox(
+              child: appointmentList(length),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
+DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+  value: item,
+  child: Text(
+      item,
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+    ),
+  );
+
 class AppointmentsTile extends StatelessWidget {
   final String appointmentID;
-  final String bundle;
+  final int bundle;
   final String time;
   AppointmentsTile(this.appointmentID, this.bundle, this.time);
 
+  String? bundlePicked;
+
+  getBundle(bundle, context) {
+    if(bundle==1) {
+      bundlePicked = AppLocalizations.of(context)!.first_bundle;
+    } else if(bundle==2) {
+      bundlePicked = AppLocalizations.of(context)!.second_bundle;
+    } else if(bundle==3) {
+      bundlePicked = AppLocalizations.of(context)!.third_bundle;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getBundle(bundle, context);
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(context, MaterialPageRoute(
@@ -95,7 +186,7 @@ class AppointmentsTile extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(AppLocalizations.of(context)!.appointment_bundle+': '+bundle),
+            Text(AppLocalizations.of(context)!.appointment_bundle+': '+bundlePicked!),
             SizedBox(height: 8),
             Text(AppLocalizations.of(context)!.appointment_for+' '+appointmentID, style: TextStyle(
               color: Colors.black,

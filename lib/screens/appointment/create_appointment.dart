@@ -17,20 +17,33 @@ class CreateAppointment extends StatefulWidget {
   _CreateAppointmentState createState() => _CreateAppointmentState();
 }
 
+
+
 class _CreateAppointmentState extends State<CreateAppointment> {
 
   TextEditingController dateCtl = TextEditingController();
   TextEditingController timeCtl = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  
+
   String? address;
   String? city;
   String? zip;
+  int? bundlePicked;
 
   DateTime? _dateTime;
   String? dateFormat;
   String? timeFormat;
+
+  getBundle(bundle) {
+    if(bundle=='Exterior Wash' || bundle=='Lavado Exterior') {
+      bundlePicked=1;
+    } else if(bundle=='Cleaning and Vacuuming' || bundle=='Lavado y Aspirado') {
+      bundlePicked=2;
+    } else if(bundle=='Deluxe Wash' || bundle=='Lavado Deluxe') {
+      bundlePicked=3;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,12 +184,13 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                         if (_formKey.currentState!.validate()){
                           String employee = await DatabaseService().getRandomEmployee();
                           List<String> users = [employee, Constants.myName];
+                          getBundle(widget.bundle);
                           String appointmentID = dateFormat!;
                           Map<String, dynamic> appointmentMap = {
                             "users": users,
                             "address": address,
                             "appointmentID" : appointmentID,
-                            "bundle": widget.bundle,
+                            "bundle": bundlePicked,
                             "city": city,
                             "date": dateFormat,
                             "time": timeFormat,
@@ -184,7 +198,7 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                           };
                           DatabaseService().createAppointment(appointmentID, appointmentMap);
                           Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => AppointmentCreated(bundle: widget.bundle, price: widget.price, date: dateFormat!, time: timeFormat!,),
+                            builder: (context) => AppointmentCreated(bundle: bundlePicked!, price: widget.price, date: dateFormat!, time: timeFormat!,),
                           ));
                         }
                       },

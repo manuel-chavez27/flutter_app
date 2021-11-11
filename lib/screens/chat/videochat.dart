@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
@@ -8,7 +9,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 
 const appID = "a83cbe17263b4c7dbea35688d0949ad9";
-const token = "006a83cbe17263b4c7dbea35688d0949ad9IAAziX0+30iABIhst/f3AEin3duJHdDiXJDkEZdLwSpDOtzDPrsAAAAAEADiW+WxtWGFYQEAAQC1YYVh";
+const token = "006a83cbe17263b4c7dbea35688d0949ad9IAA6uq17SxJJmWOPAcfWAemvnld7be/BEPNSh3FYwL7OhdzDPrsAAAAAEADd+JEhHaaOYQEAAQAepo5h";
 
 class videoChat extends StatefulWidget {
   @override
@@ -160,7 +161,7 @@ class _videoChatState extends State<videoChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Videollamada'),
+        title: Text(AppLocalizations.of(context)!.appbar_videochat),
       ),
       backgroundColor: Colors.black,
       body: Center(

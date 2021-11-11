@@ -6,6 +6,7 @@
 
     "appbar_appointment" : "Appointment",
     "appbar_privacy" : "Privacy Policies",
+    "appbar_videochat" : "Video Chat",
 
     "login_title": "Login",
     "register_title": "Register",

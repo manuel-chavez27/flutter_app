@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AppointmentCreated extends StatefulWidget {
   const AppointmentCreated({ Key? key, required this.bundle, required this.price, required this.date, required this.time }) : super(key: key);
 
-  final String bundle;
+  final int bundle;
   final String price;
   final String date;
   final String time;
@@ -20,9 +20,22 @@ class AppointmentCreated extends StatefulWidget {
 class _AppointmentCreatedState extends State<AppointmentCreated> {
 
   bool loading = false;
+  String bundlePicked ='';
+
+  getBundle(bundle, context) {
+    if(bundle==1) {
+      bundlePicked = AppLocalizations.of(context)!.first_bundle;
+    } else if(bundle==2) {
+      bundlePicked = AppLocalizations.of(context)!.second_bundle;
+    } else if(bundle==3) {
+      bundlePicked = AppLocalizations.of(context)!.third_bundle;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    getBundle(widget.bundle, context);
     return loading ? Loading() : Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(90, 70, 178, 1),
@@ -44,7 +57,7 @@ class _AppointmentCreatedState extends State<AppointmentCreated> {
                     SizedBox( height: 30 ),
                     Text(AppLocalizations.of(context)!.appointment_info),
                     SizedBox(height: 10),
-                    Text(AppLocalizations.of(context)!.appointment_bundle+': '+widget.bundle),
+                    Text(AppLocalizations.of(context)!.appointment_bundle+': '+bundlePicked),
                     Text(AppLocalizations.of(context)!.appointment_date+': '+widget.date),
                     Text(AppLocalizations.of(context)!.appointment_time+': '+widget.time),
                     Text(AppLocalizations.of(context)!.appointment_price+': '+widget.price),

@@ -30,6 +30,7 @@ class _AppointmentSelectedState extends State<AppointmentSelected> {
 
   Stream? appointmentStream;
 
+
   Widget appointment() {
     return StreamBuilder(
       stream: appointmentStream,
@@ -82,7 +83,7 @@ class _AppointmentSelectedState extends State<AppointmentSelected> {
 
 class AppointmentsInfo extends StatelessWidget {
   final String address;
-  final String bundle;
+  final int bundle;
   final String time;
   final String city;
   final String date;
@@ -91,6 +92,18 @@ class AppointmentsInfo extends StatelessWidget {
   final DatabaseService databaseMethods;
   final BuildContext context;
   AppointmentsInfo(this.address, this.bundle, this.time, this.city, this.date, this.zip, this.users, this.context, this.databaseMethods);
+
+  String? bundlePicked;
+
+  getBundle(bundle, context) {
+    if(bundle==1) {
+      bundlePicked = AppLocalizations.of(context)!.first_bundle;
+    } else if(bundle==2) {
+      bundlePicked = AppLocalizations.of(context)!.second_bundle;
+    } else if(bundle==3) {
+      bundlePicked = AppLocalizations.of(context)!.third_bundle;
+    }
+  }
 
   /// Create chatroom, send user to conversation screen, pushreplacement
   createChatroomAndStartConversation({String? userName}) async {
@@ -159,6 +172,7 @@ class AppointmentsInfo extends StatelessWidget {
   }
 
   Widget customer() {
+    getBundle(bundle, context);
     return Container(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -307,13 +321,14 @@ class AppointmentsInfo extends StatelessWidget {
                 ],
               ),
             ),
-            Text(bundle),
+            Text(bundlePicked!),
           ],
         ),
     );
   }
 
   Widget employee() {
+    getBundle(bundle, context);
     return Container(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -463,7 +478,7 @@ class AppointmentsInfo extends StatelessWidget {
                 ],
               ),
             ),
-            Text(bundle),
+            Text(bundlePicked!),
           ],
         ),
     );

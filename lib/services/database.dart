@@ -129,10 +129,45 @@ class DatabaseService {
       .snapshots();
   }
 
+  getAppointmentsBundle(String userName, int filter) async {
+    print('Obteniendo cita con base en bundle');
+    return await Firestore.instance.collection("Appointment")
+      .where("users", arrayContains: userName).where("bundle", isEqualTo: filter)
+      .snapshots();
+  }
+
   getAppointmentByID(String appointmentID) async {
     return await Firestore.instance.collection("Appointment")
       .where('appointmentID', isEqualTo: appointmentID)
       .snapshots();
+  }
+
+  getInitialLength(userName) async {
+    int length = 1;
+    await Firestore.instance.collection('Appointment').where("users", arrayContains: userName).getDocuments().then((value) {
+      length = value.documents.length;
+    });
+    return length;
+  }
+
+  getLength(String option, String username) async {
+    int length = 0;
+    int bundlePicked;
+    if(option=='Exterior Wash' || option=='Lavado Exterior') {
+      bundlePicked=1;
+    } else if(option=='Cleaning and Vacuuming' || option=='Lavado y Aspirado') {
+      bundlePicked=2;
+    } else{
+      bundlePicked=3;
+    }
+    await Firestore.instance.collection('Appointment').where('users', arrayContains: username).getDocuments().then((value) {
+      value.documents.forEach((element) {
+        if(element.data.containsValue(bundlePicked)) {
+          length++;
+        }
+      });
+    });
+    return length;
   }
 
   // Update Doc
