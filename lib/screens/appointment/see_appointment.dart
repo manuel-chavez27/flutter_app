@@ -29,7 +29,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
   getInitialLength() async {
     Constants.myName = await HelperFunctions.getUserNameSharedPreference();
     length = await databaseMethods.getInitialLength(Constants.myName);
-    print("Tienes un total de citas: $length");
     setState(() {
       length = this.length!;
     });
@@ -42,7 +41,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
         return snapshot.hasData ? ListView.builder(
           itemCount: length,
           itemBuilder: (context, index) {
-            print('Tamaño total: $length');
             return AppointmentsTile((snapshot.data! as QuerySnapshot ).documents[index]["appointmentID"], (snapshot.data! as QuerySnapshot).documents[index]["bundle"], (snapshot.data! as QuerySnapshot).documents[index]["time"]);
           },
         ) : Container(child: Text('You have no appointments'));
@@ -60,7 +58,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
   getUserInfo() async {
   Constants.myName = await HelperFunctions.getUserNameSharedPreference();
   if(bundle==401) {
-    print('Calculando sin bundle');
     getInitialLength();
     databaseMethods.getAppointments(Constants.myName).then((value){
       setState(() {
@@ -68,7 +65,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
       });
     });
   } else {
-    print('Bundle value: $bundle');
     databaseMethods.getAppointmentsBundle(Constants.myName, bundle).then((value){
       setState(() {
         appointmentStream = value;
@@ -130,7 +126,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
               ),
             ),
           ),
-          Text('Tamaño: $length'),
+          Text(AppLocalizations.of(context)!.appbar_appointment+': $length'),
           Expanded(
             child: SizedBox(
               child: appointmentList(length),

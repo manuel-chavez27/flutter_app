@@ -130,7 +130,6 @@ class DatabaseService {
   }
 
   getAppointmentsBundle(String userName, int filter) async {
-    print('Obteniendo cita con base en bundle');
     return await Firestore.instance.collection("Appointment")
       .where("users", arrayContains: userName).where("bundle", isEqualTo: filter)
       .snapshots();
