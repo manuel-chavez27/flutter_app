@@ -32,7 +32,7 @@ class _AdminState extends State<Admin> {
 
   getUserInfo() async {
     Constants.myName = await HelperFunctions.getUserNameSharedPreference();
-    databaseMethods.getEmployees(Constants.myName).then((value){
+    databaseMethods.getEmployees().then((value){
       setState(() {
         chatRoomsStream = value;
       });

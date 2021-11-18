@@ -37,6 +37,14 @@
     "my_appointment_sideMenu" : "Mis citas",
     "logout_sideMenu" : "Cerrar sesión",
 
+    "filter_bundles" : "Paquetes",
+    "filter_customers" : "Clientes",
+    "filter_date" : "Fecha",
+    "filter_time" : "Hora",
+
+    "date_format" : "Escoge una fecha",
+    "time_format" : "Escoge una hora",
+
     "promo_home" : "Promoción del día",
     "promo_message_home" : "Promoción única, todos nuestros paquetes tienen un 30% de descuento",
     "appointment_button_home" : "Agendar Cita",

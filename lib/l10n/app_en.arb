@@ -40,6 +40,14 @@
     "my_appointment_sideMenu" : "My Appointments",
     "logout_sideMenu" : "Log Out",
 
+    "filter_bundles" : "Bundles",
+    "filter_customers" : "Customer",
+    "filter_date" : "Date",
+    "filter_time" : "Time",
+
+    "date_format" : "Choose a Date",
+    "time_format" : "Choose a Hour",
+
     "promo_home" : "Promo Day",
     "promo_message_home" : "This promo is only one time, all our different bundles have a 30% discount",
     "appointment_button_home" : "Get Appointment",

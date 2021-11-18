@@ -117,21 +117,44 @@ class DatabaseService {
     return await Firestore.instance.collection("ChatRoom").where('chatRoomId', isEqualTo: id).snapshots().isEmpty;
   }
 
-  getEmployees(String username) async {
+  getEmployees() async {
     return await Firestore.instance.collection("users")
       .where("role", isEqualTo: "admin")
       .snapshots();
   }
 
-  getAppointments(String userName) async {
+  getCustomers() async {
+    return await Firestore.instance.collection("users")
+      .where("role", isEqualTo: "customer")
+      .getDocuments();
+  }
+
+  getAppointments() async {
+    return await Firestore.instance.collection("Appointment")
+      .snapshots();
+  }
+
+  getAppointmentsCustomer(String userName) async {
     return await Firestore.instance.collection("Appointment")
       .where("users", arrayContains: userName)
       .snapshots();
   }
 
-  getAppointmentsBundle(String userName, int filter) async {
+  getAppointmentsBundle(int filter) async {
     return await Firestore.instance.collection("Appointment")
-      .where("users", arrayContains: userName).where("bundle", isEqualTo: filter)
+      .where("bundle", isEqualTo: filter)
+      .snapshots();
+  }
+
+  getAppointmentsDate(String filter) async {
+    return await Firestore.instance.collection("Appointment")
+      .where("date", isEqualTo: filter)
+      .snapshots();
+  }
+
+  getAppointmentsTime(String filter) async {
+    return await Firestore.instance.collection("Appointment")
+      .where("time", isEqualTo: filter)
       .snapshots();
   }
 
