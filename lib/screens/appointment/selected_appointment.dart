@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/chat/conversation_screen.dart';
 import 'package:my_app/services/constants.dart';
@@ -86,7 +87,7 @@ class AppointmentsInfo extends StatelessWidget {
   final int bundle;
   final String time;
   final String city;
-  final String date;
+  final Timestamp date;
   final String zip;
   final String users;
   final DatabaseService databaseMethods;
@@ -108,7 +109,7 @@ class AppointmentsInfo extends StatelessWidget {
   /// Create chatroom, send user to conversation screen, pushreplacement
   createChatroomAndStartConversation({String? userName}) async {
     if(userName != Constants.myName) {
-      String chatRoomId = date+'_'+time;
+      String chatRoomId = date.toString()+'_'+time;
       bool chatRoomExist = await databaseMethods.getChatRoomById(chatRoomId);
 
       print(chatRoomExist);
@@ -263,7 +264,7 @@ class AppointmentsInfo extends StatelessWidget {
                                 ),
                                 Container(
                                   width: 200,
-                                  child: Text(date),
+                                  child: Text(DateFormat('dd-MM-yyyy').format(date.toDate())),
                                 ),
                               ],
                             ),
@@ -419,7 +420,7 @@ class AppointmentsInfo extends StatelessWidget {
                                 ),
                                 Container(
                                   width: 200,
-                                  child: Text(date),
+                                  child: Text(DateFormat('dd-MM-yyyy').format(date.toDate())),
                                 ),
                               ],
                             ),

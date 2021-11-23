@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class DatabaseService {
 
@@ -146,10 +147,16 @@ class DatabaseService {
       .snapshots();
   }
 
-  getAppointmentsDate(String filter) async {
+  getAppointmentsDate(Timestamp from, Timestamp to) async {
     return await Firestore.instance.collection("Appointment")
-      .where("date", isEqualTo: filter)
+      .where("date", isGreaterThanOrEqualTo: from).where("date", isLessThanOrEqualTo: to)
       .snapshots();
+  }
+
+  getAppointmentsDateUpdate() async {
+    return await Firestore.instance.collection("Appointment")
+    .where("appointmentID", isEqualTo: '2021-11-11')
+    .snapshots();
   }
 
   getAppointmentsTime(String filter) async {

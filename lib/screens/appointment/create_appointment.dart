@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_app/screens/appointment/created.dart';
@@ -34,6 +35,8 @@ class _CreateAppointmentState extends State<CreateAppointment> {
   DateTime? _dateTime;
   String? dateFormat;
   String? timeFormat;
+
+  Timestamp? finalDate;
 
   getBundle(bundle) {
     if(bundle=='Exterior Wash' || bundle=='Lavado Exterior') {
@@ -130,9 +133,11 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                           lastDate: DateTime(2022)
                         ).then((date) {
                           setState(() {
-                            _dateTime = date;
-                            dateFormat = DateFormat('yyyy-MM-dd').format(date!);
+                            _dateTime = date!.add(new Duration(hours: 18));
+                            dateFormat = DateFormat('yyyy-MM-dd').format(date);
                             dateCtl.text=dateFormat!;
+                            finalDate = Timestamp.fromDate(_dateTime);
+                            print('Timestamp: $finalDate');
                           });
                         });
                       }
@@ -192,7 +197,7 @@ class _CreateAppointmentState extends State<CreateAppointment> {
                             "appointmentID" : appointmentID,
                             "bundle": bundlePicked,
                             "city": city,
-                            "date": dateFormat,
+                            "date": finalDate,
                             "time": timeFormat,
                             "zip": zip,
                           };

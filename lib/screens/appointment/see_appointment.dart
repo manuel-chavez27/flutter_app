@@ -26,7 +26,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
   String? customerFilter;
   String filter = 'none';
   String dateFormat = 'Choose a Date';
+  String dateFromFormat = 'Choose a Date';
+  String dateToFormat = 'Choose a Date';
   String timeFormat = 'Choose a Hour';
+
 
   int? length;
   int bundle = 0;
@@ -34,6 +37,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
   bool customersCalled = false;
 
   DateTime? _dateTime;
+  Timestamp? dateFilterFrom;
+  Timestamp? dateFilterTo;
   
   Stream? appointmentStream;
   Stream? customerStream;
@@ -91,6 +96,9 @@ class _MyAppointmentsState extends State<MyAppointments> {
         appointmentStream = value;
       });
     });
+      print('Probando formato de date');
+      print(DateTime.now().toString().split(" "[0].toString()));
+      
     }else if(filter=='Customers') {
       print('Filtrando por Customers');
       databaseMethods.getAppointmentsCustomer(customerFilter!).then((value) {
@@ -100,7 +108,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
       });
     }else if(filter=='Date'){
       print('Filtrando por Fecha');
-      databaseMethods.getAppointmentsDate(customerFilter!).then((value) {
+      print('Fecha a buscar: From: $dateFilterFrom To:$dateFilterTo');
+      print('Timestampt: '+dateFilterFrom!.toDate().toString());
+      print('Timestampt: '+dateFilterTo!.toDate().toString());
+      databaseMethods.getAppointmentsDate(dateFilterFrom!, dateFilterTo!).then((value) {
         setState(() {
           appointmentStream = value;
         });
@@ -132,7 +143,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
     List<String> bundles = [AppLocalizations.of(context)!.first_bundle, AppLocalizations.of(context)!.second_bundle, AppLocalizations.of(context)!.third_bundle];
     List<String> options = [AppLocalizations.of(context)!.filter_bundles, AppLocalizations.of(context)!.filter_customers, AppLocalizations.of(context)!.filter_date, AppLocalizations.of(context)!.filter_time];
     
-    
+    TextEditingController dateFromCtl = TextEditingController();
+    TextEditingController dateToCtl = TextEditingController();
+
+    final _formKey = GlobalKey<FormState>();
                         
     return Scaffold(
       backgroundColor: Colors.brown[50],
@@ -175,6 +189,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       }
                       setState(() {
                         answerValue = null;
+                        dateFromFormat = AppLocalizations.of(context)!.date_format;
+                        dateToFormat = AppLocalizations.of(context)!.date_format;
                         this.filterValue = value;
                         _getFilterList(value);
                         filter='none';
@@ -196,28 +212,78 @@ class _MyAppointmentsState extends State<MyAppointments> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: filterValue=='Date'|| filterValue=='Fecha' ? DropdownButton<DateTime>(
-                    hint: Text('Choose A Date'),
-                    items: [
-                      dateFormat
-                    ].map((e) => DropdownMenuItem<DateTime>(child: Text(e))).toList(),
-                    onChanged: (DateTime? value) {
-                    showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2021),
-                          lastDate: DateTime(2022)
-                        ).then((date) {
-                          setState(() {
-                            _dateTime = date;
-                            dateFormat = DateFormat('yyyy-MM-dd').format(date!);
-                            print('Procederé a filtrar por fecha');
-                            filter='Date';
-                            customerFilter = dateFormat;
-                            getUserInfo();
-                          });
-                        });
-                    }) : filterValue=='Time' || filterValue=='Hora' ? DropdownButton<TimeOfDay>(
+                  child: filterValue=='Date'|| filterValue=='Fecha' ? Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: dateFromCtl,
+                          decoration: InputDecoration(
+                            labelText: dateFromFormat,
+                            prefixIcon: Icon(Icons.date_range)
+                          ),
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(new FocusNode());
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2022)
+                            ).then((date) {
+                              setState(() {
+                                _dateTime = date;
+                                dateFilterFrom = Timestamp.fromDate(date); // Esto es la clave
+                                print('Procederé a filtrar por fecha');
+                                filter='Date';
+                                dateFromFormat = DateFormat('dd-MM-yyyy').format(date!);
+                                print('dateFormat: $dateFormat');
+                                dateFromCtl.text=dateFormat;
+                              });
+                            });
+                          }
+                        ),
+                        TextFormField(
+                          controller: dateToCtl,
+                          decoration: InputDecoration(
+                            labelText: dateToFormat,
+                            prefixIcon: Icon(Icons.date_range)
+                          ),
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(new FocusNode());
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2022)
+                            ).then((date) {
+                              setState(() {
+                                _dateTime = date;
+                                date = _dateTime!.add(new Duration(hours: 23));
+                                dateFilterTo = Timestamp.fromDate(date); // Esto es la clave
+                                print('Procederé a filtrar por fecha');
+                                dateToFormat = DateFormat('dd-MM-yyyy').format(date!);
+                                filter='Date';
+                                dateToCtl.text=dateFormat;
+                              });
+                            });
+                          }
+                        ),
+                         ElevatedButton(
+                          child: Text(AppLocalizations.of(context)!.filter_text),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()){
+                              print('Rangos validados');
+                              getUserInfo();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue[400],
+                          )
+                        ),
+                      ],
+                    ),
+                    
+                  ) : filterValue=='Time' || filterValue=='Hora' ? DropdownButton<TimeOfDay>(
                       hint: Text('Choose a Hour'),
                       items: [
                       timeFormat
@@ -233,6 +299,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
                           ),
                         ).then((time) => {
                           setState(() {
+                            dateFromFormat = AppLocalizations.of(context)!.date_format;
+                            dateToFormat = AppLocalizations.of(context)!.date_format;
                             timeFormat = time!.format(context);
                             print('Procederé a filtrar por Hora');
                             filter='Time';
@@ -250,6 +318,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
                     onChanged: (value) async {
                       //length = await databaseMethods.getLength(value!, Constants.myName);
                       setState(() {
+                        dateFromFormat = AppLocalizations.of(context)!.date_format;
+                        dateToFormat = AppLocalizations.of(context)!.date_format;
                         this.answerValue = value;
                         if(filterValue=='Bundles' || filterValue=='Paquetes') {
                           print('Procederé a filtrar por Bundles');
@@ -288,6 +358,33 @@ class _MyAppointmentsState extends State<MyAppointments> {
     );
   }
 }
+
+/*
+DropdownButton<DateTime>(
+  hint: Text(AppLocalizations.of(context)!.date_format),
+  items: [
+    dateFormat
+  ].map((e) => DropdownMenuItem<DateTime>(child: Text(e))).toList(),
+  onChanged: (DateTime? value) {
+  showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2021),
+        lastDate: DateTime(2022)
+      ).then((date) {
+        setState(() {
+          _dateTime = date;
+          dateFormat = DateFormat('dd-MM-yyyy').format(date!);
+          dateFilterFrom = Timestamp.fromDate(date); // Esto es la clave
+          print('Procederé a filtrar por fecha');
+          filter='Date';
+          customerFilter = dateFormat;
+          getUserInfo();
+        });
+      });
+})
+
+ */
 
 DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
   value: item,
