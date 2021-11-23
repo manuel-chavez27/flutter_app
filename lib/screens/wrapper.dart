@@ -33,7 +33,7 @@ class Wrapper extends StatelessWidget {
               }
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  print('Loading...');
+                  Loading();
                   break;
                 default:
                   return checkRole(snapshot.data);
